@@ -1,4 +1,4 @@
-# agents-setup
+# claude-parallel-agents
 
 A collection of [Claude Code](https://claude.com/claude-code) /
 [OpenCode](https://opencode.ai) skills. Add a skill by dropping a
@@ -78,8 +78,8 @@ Clone anywhere and run the installer once — it links every skill (and any Open
 agents they ship) into the global config directories for both CLIs:
 
 ```bash
-git clone git@github.com:khoryz666/agents-setup.git
-cd agents-setup
+git clone https://github.com/zishaan1911/claude-parallel-agents.git
+cd claude-parallel-agents
 ./install.sh
 ./skills/parallel-agents/scripts/check-cli.sh
 ```
@@ -87,8 +87,8 @@ cd agents-setup
 Windows (PowerShell):
 
 ```powershell
-git clone git@github.com:khoryz666/agents-setup.git
-cd agents-setup
+git clone https://github.com/zishaan1911/claude-parallel-agents.git
+cd claude-parallel-agents
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 powershell -ExecutionPolicy Bypass -File .\skills\parallel-agents\scripts\check-cli.ps1
 ```
