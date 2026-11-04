@@ -2,7 +2,8 @@
 
 A collection of [Claude Code](https://claude.com/claude-code) /
 [OpenCode](https://opencode.ai) skills. Add a skill by dropping a
-`skills/<id>/SKILL.md` directory; `install.sh` links them all into both CLIs.
+`skills/<id>/SKILL.md` directory; `install.sh` (Linux/macOS) or `install.ps1`
+(Windows) links them all into both CLIs.
 
 ## Skills
 
@@ -83,7 +84,16 @@ cd agents-setup
 ./skills/parallel-agents/scripts/check-cli.sh
 ```
 
-`install.sh` is idempotent and uses symlinks, so `git pull` in this repo updates the
+Windows (PowerShell):
+
+```powershell
+git clone git@github.com:khoryz666/agents-setup.git
+cd agents-setup
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+powershell -ExecutionPolicy Bypass -File .\skills\parallel-agents\scripts\check-cli.ps1
+```
+
+The installer is idempotent and uses links, so `git pull` in this repo updates the
 skills in place. Add a skill by dropping a `skills/<id>/SKILL.md` directory — the
 installer discovers it automatically.
 
@@ -96,7 +106,7 @@ for the brief format.
 ## Prerequisites
 
 - **Linux / macOS** with `bash` and the `claude` and/or `opencode` CLI installed and
-  logged in **on the host**:
+  logged in **on the host** (or **Windows** with PowerShell and the same CLIs):
   - `npm install -g '@anthropic-ai/claude-code'`, then `claude` → `/login`.
   - `curl -fsSL https://opencode.ai/install | bash`, then `opencode auth login`.
 - A shared working directory between the orchestrator's shell and the host, so files
@@ -117,6 +127,12 @@ for your project's language and framework.
 ./skills/parallel-agents/scripts/launch.sh --repo /abs/path/to/repo --names topics,questions,import --tmux
 ```
 
+```powershell
+# Windows
+powershell -ExecutionPolicy Bypass -File .\skills\parallel-agents\scripts\launch.ps1 `
+  -Repo C:\path\to\repo -Names topics,questions,import
+```
+
 Each agent writes `.agents/runs/<name>.done` when it exits; the orchestrator waits on
 those markers, then reviews, tests, and commits. Everything the workflow writes lives
 under `.agents/` (gitignored).
@@ -130,7 +146,9 @@ under `.agents/` (gitignored).
 | `skills/parallel-agents/scripts/run-agent.sh` | A single agent (launched by `launch.sh`). |
 | `skills/parallel-agents/scripts/check-cli.sh` | Prerequisite check for `claude` / `opencode`. |
 | `skills/parallel-agents/scripts/lib.sh` | Shared helpers and per-runner model defaults. |
+| `skills/parallel-agents/scripts/*.ps1` | Windows (PowerShell) versions of the scripts above. |
 | `install.sh` | Link every skill + OpenCode agent into global config. |
+| `install.ps1` | Windows version of `install.sh`. |
 | `config.json` | Deterministic model and attribution settings. |
 | `skills/parallel-agents/opencode/agents/parallel-agent.md` | The OpenCode file-only agent definition. |
 | `skills/parallel-agents/references/brief-template.md` | The brief format and how to split tasks for parallelism. |
